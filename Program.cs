@@ -37,7 +37,8 @@ matchResultsData.ForEach((matchResult) =>
             var isSecondPlayer = i == 1;
             var characterString = String.Join(" ", playerData.GetRange(2, playerData.Count - (isSecondPlayer ? 3 : 2)).ToArray());
             var character = playerData.Count > 2 ? characterString.Replace("(", "").Replace(")", "") : "N/A";
-            var matchResult = new Result() { Player = playerData[1], Character = character, MatchesWon = Int32.Parse(matchesWonByPlayers[i]), ResultId = resultId };
+            var outcome = isSecondPlayer ? "Lost" : "Won";
+            var matchResult = new Result() { ResultId = resultId, Player = playerData[1], Character = character, MatchesWon = Int32.Parse(matchesWonByPlayers[i]), Outcome= outcome };
             results.Add(matchResult);
 
         }

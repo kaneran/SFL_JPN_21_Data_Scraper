@@ -12,5 +12,6 @@ namespace SFL_JPN
         public string Player { get; set; }
         public string Character { get; set; }
         public int MatchesWon { get; set; }
+        public string Outcome { get; set; }
     }
 }
