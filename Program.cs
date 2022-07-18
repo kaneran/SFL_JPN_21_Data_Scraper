@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.Playwright;
+using Newtonsoft.Json;
 using SFL_JPN;
 using System.Text.RegularExpressions;
 
@@ -46,5 +47,9 @@ matchResultsData.ForEach((matchResult) =>
     });
 });
 
+var jsonString = JsonConvert.SerializeObject(results);
+var path = @"C:\Users\kane-\Documents\Personal Projects\SFL_JPN\SFL_JPN\sfv_jpn_matches.txt";
+File.WriteAllText(@"C:\Users\kane-\Documents\Personal Projects\SFL_JPN\SFL_JPN\sfv_jpn_matches.txt", jsonString);
 
-Console.WriteLine(results);
+var json = JsonConvert.DeserializeObject<List<Result>>(File.ReadAllText(path));
+Console.WriteLine(json);
