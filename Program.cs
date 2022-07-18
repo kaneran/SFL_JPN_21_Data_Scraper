@@ -16,26 +16,34 @@ var data = await matchResults.AllTextContentsAsync();
 
 //Get the match results throughout October to December excluding Play offs and Grand finals results
 var matchResultsData = data.Where(data => data.Contains("December") || data.Contains("November") || data.Contains("October")).ToList();
-
+var results = new List<Result>();
+var resultId = 0;
 matchResultsData.ForEach((matchResult) =>
 {
     var matchResults = matchResult.Split("\n").Where(data => data.Contains("Away:") || data.Contains("Home:")).ToList();
-    var resultId = 0;
+    
     matchResults.ForEach(result =>
     {
-        var matchesWonByPlayers = result.Substring(result.Length - 4).Replace(".","").Split("-");
+        var matchesWonByPlayers = result.Substring(result.Length - 4).Replace(".", "").Split("-");
         var numberOfMatchesWonByWinningPlayer = matchesWonByPlayers[0];
         var numberOfMatchesLostByLosingPlayer = matchesWonByPlayers[1];
 
 
         //Player name, Character used, matches won, match result (W, L) , result id
-        var playerDataStrings = result.Replace("•","").Split(new string[] { "beat" }, StringSplitOptions.None);
-        for(var i = 0; i < playerDataStrings.Length; i++)
+        var playerDataStrings = result.Replace("•", "").Split(new string[] { "beat" }, StringSplitOptions.None);
+        for (var i = 0; i < playerDataStrings.Length; i++)
         {
             var playerData = playerDataStrings[i].Split(" ").Where(data => !string.IsNullOrEmpty(data)).ToList();
-            var matchResult = new Result() { ResultId = resultId };
+            var isSecondPlayer = i == 1;
+            var characterString = String.Join(" ", playerData.GetRange(2, playerData.Count - (isSecondPlayer ? 3 : 2)).ToArray());
+            var character = playerData.Count > 2 ? characterString.Replace("(", "").Replace(")", "") : "N/A";
+            var matchResult = new Result() { Player = playerData[1], Character = character, MatchesWon = Int32.Parse(matchesWonByPlayers[i]), ResultId = resultId };
+            results.Add(matchResult);
+
         }
         resultId++;
-        Console.WriteLine();
     });
 });
+
+
+Console.WriteLine(results);
