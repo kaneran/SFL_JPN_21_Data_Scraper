@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SFL_JPN
+namespace SFL_JPN.Models
 {
     public class Result
     {
