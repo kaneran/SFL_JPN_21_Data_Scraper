@@ -2,4 +2,4 @@
 using SFL_JPN.Controllers;
 
 var resultsController = new ResultsController();
-resultsController.GetResults();
+resultsController.WriteResults();
